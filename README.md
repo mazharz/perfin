@@ -11,3 +11,9 @@ Personal finances. This is a CLI tool (and hopefully a TUI in future) to organiz
 - [ ] add configuration file
   - [ ] add storage file directory
 - [ ] generate summary chart for each month
+- [ ] add Category
+- [ ] add Account
+- [ ] add Currency
+- [ ] add CLIAction
+- [ ] add CLIOption
+- [ ] add random id generator

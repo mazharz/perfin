@@ -1,3 +1,9 @@
+pub mod cli;
+pub mod entry;
+
+use crate::cli::act;
+use std::env;
+
 fn main() {
-    println!("Perfin's init.")
+    act(env::args());
 }
