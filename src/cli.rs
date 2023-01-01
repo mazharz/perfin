@@ -1,30 +1,42 @@
-use std::env::Args;
-
 use crate::entry::Entry;
+use clap::{Parser, Subcommand};
 
-// actions:
-// - add
-
-// options for add:
-// -d STRING: description
-// -date YYYY-MM-DD: date
-
-pub fn act(mut args: Args) {
-    args.next();
-
-    // TODO: add CLIAction
-    let action = args.next().expect("No action was provided!");
-
-    // TODO:
-    // add CLIOption struct which takes valueless & valued options
-    let option = args.next().expect("No option was provided!");
-    let value = args.next().expect("No value was provided!");
-    let option2 = args.next().expect("No option was provided!");
-    let value2 = args.next().expect("No value was provided!");
-
-    if action == "add" && option == "-d" && option2 == "-date" {
-        let entry = Entry::add(value, value2).expect("err");
-        dbg!(entry);
-    };
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+    #[command(subcommand)]
+    command: Option<Commands>,
 }
-// mut args: impl Iterator<Item = String>
+
+#[derive(Subcommand, Debug)]
+enum Commands {
+    /// Adds new entry
+    Add {
+        /// must be a string
+        #[arg(short = 'm', long, default_value_t = String::from(""))]
+        description: String,
+
+        /// must be a string in format: "YYYY-MM-DD" or customized config format
+        #[arg(short, long)]
+        date: String,
+
+        /// debit or credit amount (+/-) prefix determines which
+        amount: String,
+    },
+}
+
+pub fn act() {
+    let args = Args::parse();
+
+    match args.command {
+        Some(Commands::Add {
+            description,
+            date,
+            amount,
+        }) => {
+            let entry = Entry::add(description, date, amount).expect("Failed to create entry!");
+            dbg!(entry);
+        }
+        None => {}
+    }
+}
