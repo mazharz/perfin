@@ -1,4 +1,5 @@
-use crate::entry::Entry;
+use crate::date::date;
+use crate::transaction::Transaction;
 use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
@@ -17,11 +18,11 @@ enum Commands {
         description: String,
 
         /// must be a string in format: "YYYY-MM-DD" or customized config format
-        #[arg(short, long)]
+        #[arg(short, long, default_value_t = date::today_date())]
         date: String,
 
-        /// debit or credit amount (+/-) prefix determines which
-        amount: String,
+        /// must be key value pairs: assets:checking $5000 [revenues:salary $-5000]
+        postings: Vec<String>,
     },
 }
 
@@ -32,9 +33,10 @@ pub fn act() {
         Some(Commands::Add {
             description,
             date,
-            amount,
+            postings,
         }) => {
-            let entry = Entry::add(description, date, amount).expect("Failed to create entry!");
+            let entry =
+                Transaction::add(description, date, postings).expect("Failed to create entry!");
             dbg!(entry);
         }
         None => {}
