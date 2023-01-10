@@ -1,7 +1,7 @@
 use chrono::{DateTime, Local, NaiveDate};
-use uuid::Uuid;
 
 use crate::posting::Posting;
+use crate::random::random;
 
 #[derive(Debug)]
 pub struct Transaction {
@@ -19,7 +19,7 @@ impl Transaction {
         date: String,
         postings: Vec<String>,
     ) -> Result<Transaction, &'static str> {
-        let id = Uuid::new_v4().to_string();
+        let id = random::generate_string(None);
 
         if date.len() <= 0 {
             return Err("date can't be empty.");

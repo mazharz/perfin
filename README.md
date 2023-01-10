@@ -15,3 +15,9 @@ Personal finances. This is a CLI tool (and hopefully a TUI in future) to organiz
 - [ ] add Category
 - [ ] add Account
 - [ ] add Currency
+
+# .env format
+
+```
+TRANSACTION_ID_LENGTH=<number>
+```
