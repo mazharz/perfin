@@ -1,12 +1,24 @@
+// TODO: make name into account which handles subaccounts
+#[derive(Debug)]
 pub struct Posting {
     name: String,
     currency: String,
-    amount: u128,
+    amount: i64,
 }
 
 impl Posting {
     pub fn add(name: String, amount: String) -> Result<Posting, &'static str> {
-        return Err("shit");
-        // TODO: create Posting and use in Transaction
+        let mut amount = amount.chars();
+        let currency = amount.next().expect("Couldn't extract prefix from amount.");
+        let amount = amount
+            .as_str()
+            .parse::<i64>()
+            .expect("Couldn't convert amount to number.");
+
+        Ok(Posting {
+            name,
+            currency: currency.to_string(),
+            amount,
+        })
     }
 }

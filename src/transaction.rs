@@ -1,12 +1,14 @@
 use chrono::{DateTime, Local, NaiveDate};
 use uuid::Uuid;
 
+use crate::posting::Posting;
+
 #[derive(Debug)]
 pub struct Transaction {
     id: String,
     description: String,
     date: NaiveDate,
-    postings: Vec<String>,
+    postings: Vec<Posting>,
     created_at: DateTime<Local>,
     updated_at: DateTime<Local>,
 }
@@ -27,33 +29,15 @@ impl Transaction {
         if postings.len() % 2 != 0 {
             return Err("Must be key value pairs.");
         }
-        // TODO: create Vec<Posting> here
 
-        // let mut debit = 0;
-        // let mut credit = 0;
-        // let mut amount = amount.chars();
-        // let prefix = amount.next().expect("Couldn't extract prefix from amount.");
-
-        // TODO: figure out how to ergonomically send -394 without having to prepend a -- to it
-        // TODO: refactor
-        // if prefix == '+' || prefix == '-' {
-        //     let whole = amount
-        //         .as_str()
-        //         .parse::<u128>()
-        //         .expect("Couldn't convert amount to number.");
-        //     if prefix == '+' {
-        //         debit = whole;
-        //     } else {
-        //         credit = whole;
-        //     }
-        // } else {
-        //     let mut whole = String::from(prefix);
-        //     whole.push_str(amount.as_str());
-        //     let whole = whole
-        //         .parse::<u128>()
-        //         .expect("Couldn't convert amount to number.");
-        //     debit = whole;
-        // }
+        let mut posting_objects: Vec<Posting> = vec![];
+        for i in 0..postings.len() / 2 {
+            let name = &postings[i * 2];
+            let amount = &postings[(i + 1) * 2 - 1];
+            let posting = Posting::add(name.to_string(), amount.to_string())
+                .expect("Couldn't create posting object.");
+            posting_objects.push(posting);
+        }
 
         let created_at = Local::now();
         let updated_at = Local::now();
@@ -62,7 +46,7 @@ impl Transaction {
             id,
             description,
             date,
-            postings,
+            postings: posting_objects,
             created_at,
             updated_at,
         })
