@@ -1,3 +1,4 @@
+pub mod account;
 pub mod cli;
 pub mod config;
 pub mod date;

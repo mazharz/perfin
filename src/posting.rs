@@ -1,7 +1,9 @@
+use crate::account::Account;
+
 // TODO: make name into account which handles subaccounts
 #[derive(Debug)]
 pub struct Posting {
-    name: String,
+    account: Box<Account>,
     currency: String,
     amount: i64,
 }
@@ -15,8 +17,10 @@ impl Posting {
             .parse::<i64>()
             .expect("Couldn't convert amount to number.");
 
+        let account = Account::add(name).expect("Couldn't create account struct.");
+
         Ok(Posting {
-            name,
+            account,
             currency: currency.to_string(),
             amount,
         })

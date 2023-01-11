@@ -4,17 +4,15 @@ Personal finances. This is a CLI tool (and hopefully a TUI in future) to organiz
 
 # To-do
 
-- [ ] read entry via command line
-- [ ] update entry via command line
-- [ ] remove entry via command line
-- [ ] store entries in csv files (one file per year)
+- [x] read transaction via command line
+  - [ ] append transaction to file
+- [ ] update transaction via command line
+  - [ ] replace updated transaction into file
+- [ ] remove transaction via command line
 - [ ] add configuration file
   - [ ] add storage file directory
   - [ ] add custom date format
 - [ ] generate summary chart for each month
-- [ ] add Category
-- [ ] add Account
-- [ ] add Currency
 
 # .env format
 
