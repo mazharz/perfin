@@ -35,9 +35,9 @@ pub fn act() {
             date,
             postings,
         }) => {
-            let entry =
+            let transaction =
                 Transaction::add(description, date, postings).expect("Failed to create entry!");
-            dbg!(entry);
+            println!("{}", transaction.format_string());
         }
         None => {}
     }

@@ -51,4 +51,25 @@ impl Transaction {
             updated_at,
         })
     }
+
+    pub fn format_string(&self) -> String {
+        let mut result = "".to_string();
+
+        let date = self.date.format("%Y-%m-%d").to_string();
+        result.push_str(&date);
+
+        result.push_str(" ");
+
+        let description = self.description.to_string();
+        result.push_str(&description);
+
+        result.push_str("\n    ");
+
+        for posting in &self.postings {
+            result.push_str(&posting.format_string());
+            result.push_str("\n    ");
+        }
+
+        result
+    }
 }

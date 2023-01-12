@@ -10,7 +10,6 @@ impl Account {
             return Err("Account name can't be empty");
         }
 
-        // array of strings
         let mut accounts = name.split(":").into_iter();
         let root = accounts
             .next()
@@ -21,16 +20,17 @@ impl Account {
             name: root,
             subaccount: None,
         }));
-        let mut refe = &mut root;
+
+        let mut anchor = &mut root;
         for acc in accounts {
             let sub = Account {
                 name: acc.to_string(),
                 subaccount: None,
             };
-            match refe {
+            match anchor {
                 Some(acc) => {
                     acc.subaccount = Some(Box::new(sub));
-                    refe = &mut acc.subaccount;
+                    anchor = &mut acc.subaccount;
                 }
                 None => break,
             }
@@ -40,5 +40,23 @@ impl Account {
             Some(r) => return Ok(r),
             None => return Err("Couldn't create account."),
         }
+    }
+
+    pub fn format_string(self: &Box<Self>) -> String {
+        let mut result = String::from("");
+
+        let mut anchor = self;
+        loop {
+            result.push_str(&anchor.name);
+            match &anchor.subaccount {
+                Some(next) => {
+                    result.push_str(":");
+                    anchor = &next;
+                }
+                None => break,
+            }
+        }
+
+        result
     }
 }

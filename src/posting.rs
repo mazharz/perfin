@@ -1,6 +1,5 @@
 use crate::account::Account;
 
-// TODO: make name into account which handles subaccounts
 #[derive(Debug)]
 pub struct Posting {
     account: Box<Account>,
@@ -24,5 +23,20 @@ impl Posting {
             currency: currency.to_string(),
             amount,
         })
+    }
+
+    pub fn format_string(&self) -> String {
+        let mut result = String::from("");
+
+        let account = &self.account.format_string();
+        result.push_str(account);
+
+        result.push_str("    ");
+
+        result.push_str(&self.currency);
+
+        result.push_str(&self.amount.to_string());
+
+        result
     }
 }
