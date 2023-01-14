@@ -5,7 +5,8 @@ Personal finances. This is a CLI tool (and hopefully a TUI in future) to organiz
 # To-do
 
 - [x] read transaction via command line
-  - [ ] append transaction to file
+  - [x] append transaction to file
+  - [ ] add id field to transaction (figure out best practice when it comes to PTAs)
 - [ ] update transaction via command line
   - [ ] replace updated transaction into file
 - [ ] remove transaction via command line
@@ -18,4 +19,5 @@ Personal finances. This is a CLI tool (and hopefully a TUI in future) to organiz
 
 ```
 TRANSACTION_ID_LENGTH=<number>
+JOURNAL_FILE_PATH=<path>
 ```
